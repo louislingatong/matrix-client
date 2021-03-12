@@ -10,19 +10,19 @@ const history = createBrowserHistory();
 function Routes() {
   return (
     <ReactRouter history={history}>
-      <Switch>
-        {
-          routes.map((route, i) => {
-            if (route.notFound) {
-              return <Redirect key={i} to={{pathname: '/login'}}/>
-            }
-            if (route.auth) {
-              return <PrivateRoute key={i} {...route} />
-            }
-            return <PublicRoute key={i} {...route} />
-          })
-        }
-      </Switch>
+        <Switch>
+          {
+            routes.map((route, i) => {
+              if (route.notFound) {
+                return <Redirect key={i} to={{pathname: '/login'}}/>
+              }
+              if (route.auth) {
+                return <PrivateRoute key={i} {...route} />
+              }
+              return <PublicRoute key={i} {...route} />
+            })
+          }
+        </Switch>
     </ReactRouter>
   );
 }

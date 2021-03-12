@@ -33,6 +33,7 @@
 }
 
 .main-wrapper {
+  margin-top: 70px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -43,4 +44,20 @@
   position: sticky;
   top: 56px;
   z-index: 1020;
+}
+
+.bg-primary-light {
+  background-color: #cce5ff;
+}
+
+.bg-success-light {
+  background-color: #d4edda;
+}
+
+.bg-warning-light {
+  background-color: #fff3cd;
+}
+
+.bg-secondary-light {
+  background-color: #e2e3e5;
 }

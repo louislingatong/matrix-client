@@ -30,6 +30,9 @@ function PrivateHeader() {
           <Nav.Link active={location.pathname === '/'}
                     to={{pathname: '/', state: {from: location.pathname}}}
                     as={Link}>Home</Nav.Link>
+          <Nav.Link active={location.pathname === '/users'}
+                    to={{pathname: '/users', state: {from: location.pathname}}}
+                    as={Link}>Users</Nav.Link>
         </Nav>
         <Nav>
           <NavDropdown title={profile.user && profile.user.name} id="basic-nav-dropdown">

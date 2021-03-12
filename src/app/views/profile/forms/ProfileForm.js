@@ -36,6 +36,12 @@ function ProfileForm(props) {
         </Button>
       }
       <Form onSubmit={handleSubmit(onSubmitForm)}>
+        <Form.Group controlId="formCode">
+          <Form.Label>Code</Form.Label>
+          <Form.Control name="code"
+                        defaultValue={profile.user.code}
+                        readOnly/>
+        </Form.Group>
         <Form.Row>
           <Col>
             <Form.Group controlId="formFirstName">
