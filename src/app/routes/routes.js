@@ -37,16 +37,23 @@ export default [
     component: lazy(() => import('../views/auth/ResetPassword')),
   },
   {
+    name: 'Verify Email',
+    path: '/verify-email/:token?',
+    exact: true,
+    component: lazy(() => import('../views/auth/VerifyEmail')),
+  },
+  {
     name: 'Home',
     path: '/',
     exact: true,
     component: lazy(() => import('../views/home')),
   },
   {
-    name: 'Verify Email',
-    path: '/verify-email/:token?',
+    name: 'Users',
+    path: '/users',
     exact: true,
-    component: lazy(() => import('../views/auth/VerifyEmail')),
+    auth: true,
+    component: lazy(() => import('../views/user'))
   },
   {
     path: '*',

@@ -2,11 +2,13 @@ import React from 'react';
 
 function Footer() {
   return (
-    <div>
-      <div>
-        LOGO
+    <div className="footer-wrapper">
+      <div className="content-container">
+        <div className="logo-container">
+          LOGO
+        </div>
       </div>
-      <label>Copyright©2021 React + Redux + Webpack</label>
+      <label>Copyright©2021 Matrix Inc.</label>
     </div>
   );
 }

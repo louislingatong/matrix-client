@@ -15,6 +15,7 @@ function RegisterForm({handleSubmitForm, error, isLoading}) {
 
   const onSubmitForm = data => {
     reset({
+      code: '',
       email: '',
       username: '',
       password: '',
@@ -29,6 +30,21 @@ function RegisterForm({handleSubmitForm, error, isLoading}) {
     <div>
       <h3>Register</h3>
       <Form onSubmit={handleSubmit(onSubmitForm)}>
+        <Form.Group controlId="formCode">
+          <Form.Label>Code</Form.Label>
+          <Form.Control placeholder="Enter code"
+                        name="code"
+                        isInvalid={!!errors.code}
+                        ref={
+                          register()
+                        }/>
+          {
+            errors.code &&
+            <Form.Text className="text-danger">
+              {errors.code.message}
+            </Form.Text>
+          }
+        </Form.Group>
         <Form.Group controlId="formEmail">
           <Form.Label>Email</Form.Label>
           <Form.Control type="email"

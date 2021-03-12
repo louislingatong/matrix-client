@@ -11,7 +11,6 @@ Loader.propTypes = {
 const override = css`
   display: block;
   width: 100%;
-  z-index: 1041;
 `;
 
 const colors = {
@@ -28,7 +27,7 @@ function Loader(props) {
       return <div className="loader-wrapper-overlay"><ClipLoader color={color} loading={true} size={50}/></div>
     case 'bar':
     default:
-      return <div className="loader-wrapper"><BarLoader color={colors.light} loading={true} css={override}/></div>
+      return <div className="loader-wrapper"><BarLoader color={color} loading={true} css={override}/></div>
   }
 }
 
