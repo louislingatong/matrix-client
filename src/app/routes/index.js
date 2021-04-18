@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Router as ReactRouter, Redirect, Switch} from 'react-router-dom';
 import {createBrowserHistory} from 'history';
 import PrivateRoute from './PrivateRoute';

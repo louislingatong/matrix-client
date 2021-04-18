@@ -1,20 +1,23 @@
 import Http from '../utils/Http';
-import {setUserList, setUserData} from '../store/userSlice';
-import {enableLoading, disableLoading} from '../store/loaderSlice';
+import {resetBag} from '../store/bagSlice';
+import {setOrderList} from '../store/orderSlice';
+import {disableLoading, enableLoading} from '../store/loaderSlice';
 
 /**
- * Fetch all users
+ * Create new order for registered user
  *
+ * @param data
  * @returns {function(*)}
  */
-export function fetchAllUsers() {
+export function createOrder(data) {
   return dispatch => {
     dispatch(enableLoading());
     return new Promise((resolve, reject) => {
-      Http.get('users')
+      Http.post('orders/place-order', data)
         .then(res => {
-          const {list} = res.data;
-          dispatch(setUserList(list));
+          const {orderList} = res.data;
+          dispatch(resetBag());
+          dispatch(setOrderList(orderList));
           resolve(res.data);
         })
         .catch(err => {
@@ -28,19 +31,20 @@ export function fetchAllUsers() {
 }
 
 /**
- * Fetch specific user by id
+ * Create new order for guest user
  *
- * @param id
+ * @param data
  * @returns {function(*)}
  */
-export function fetchUser(id) {
+export function createOrderGuest(data) {
   return dispatch => {
     dispatch(enableLoading());
     return new Promise((resolve, reject) => {
-      Http.get(`users/${id}`)
+      Http.post('orders/guest-place-order', data)
         .then(res => {
-          const {data} = res.data;
-          dispatch(setUserData(data));
+          const {orderList} = res.data;
+          dispatch(resetBag());
+          dispatch(setOrderList(orderList));
           resolve(res.data);
         })
         .catch(err => {

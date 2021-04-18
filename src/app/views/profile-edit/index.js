@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {Alert, Card, Col, Container, Row} from 'react-bootstrap';
+import React, {useState} from 'react';
+import {useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
+import {Alert, Card, Col, Container, Row} from 'react-bootstrap';
 import _ from 'lodash';
 import ProfileForm from './forms/ProfileForm';
 import Avatar from '../../components/avatar/Avatar';
@@ -8,17 +9,19 @@ import {update, updateAvatar} from '../../services/profileService';
 import {loggedInUser} from '../../store/authSlice';
 import {loaderStatus} from '../../store/loaderSlice';
 
-function Profile() {
+function ProfileEdit() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const profile = useSelector(loggedInUser);
   const isLoading = useSelector(loaderStatus);
   const [error, setError] = useState({});
   const [alertMessage, setAlertMessage] = useState({});
-  const [successProfileUpdate, setSuccessProfileUpdate] = useState(false);
 
   const handleSubmitForm = data => {
     dispatch(update(data))
-      .then(() => setSuccessProfileUpdate(true))
+      .then(() => {
+        history.push('/profile/view', {from: {path: history.location.pathname}});
+      })
       .catch(err => {
         if (err.status === 422) {
           setError(err.error);
@@ -28,8 +31,7 @@ function Profile() {
             message: err.error
           });
         }
-      })
-      .finally(() => setSuccessProfileUpdate(false));
+      });
   }
 
   const handleAvatarUpdate = avatar => {
@@ -65,7 +67,7 @@ function Profile() {
           <Card>
             <Card.Body>
               <ProfileForm handleSubmitForm={handleSubmitForm} error={error} isLoading={isLoading}
-                           profile={profile} successProfileUpdate={successProfileUpdate}/>
+                           profile={profile}/>
             </Card.Body>
           </Card>
         </Col>
@@ -74,4 +76,4 @@ function Profile() {
   )
 }
 
-export default Profile;
+export default ProfileEdit;

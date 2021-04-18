@@ -1,32 +1,25 @@
 import Http from '../utils/Http';
-import _ from 'lodash';
-import {enableLoading, disableLoading} from '../store/loaderSlice';
-import {authLogin} from '../store/authSlice';
-import {resetBag} from '../store/bagSlice';
-import {resetCheckout} from '../store/checkoutSlice';
-import {resetOrder} from '../store/orderSlice';
-import {resetProduct} from '../store/productSlice';
-import {resetUser} from '../store/userSlice';
+import {disableLoading, enableLoading} from '../store/loaderSlice';
+import {
+  setProductList,
+  setProductData,
+  setCategoryOwners,
+  setCategoryProducts
+} from '../store/productSlice';
 
 /**
- * Login user
+ * Fetch all products
  *
- * @param data
  * @returns {function(*)}
  */
-export function login(data) {
+export function fetchAllProducts() {
   return dispatch => {
     dispatch(enableLoading());
     return new Promise((resolve, reject) => {
-      Http.post('auth/login', data)
+      Http.get('products')
         .then(res => {
-          const {token} = res.data;
-          dispatch(authLogin(token));
-          dispatch(resetBag());
-          dispatch(resetCheckout());
-          dispatch(resetOrder());
-          dispatch(resetProduct());
-          dispatch(resetUser());
+          const {list} = res.data;
+          dispatch(setProductList(list));
           resolve(res.data);
         })
         .catch(err => {
@@ -40,19 +33,19 @@ export function login(data) {
 }
 
 /**
- * Register new user
+ * Fetch product by id
  *
- * @param data
+ * @param id
  * @returns {function(*)}
  */
-export function register(data) {
+export function fetchProductById(id) {
   return dispatch => {
     dispatch(enableLoading());
     return new Promise((resolve, reject) => {
-      Http.post('auth/register', _.pickBy(data))
+      Http.get(`products/${id}`)
         .then(res => {
-          const {token} = res.data;
-          dispatch(authLogin(token));
+          const {data} = res.data;
+          dispatch(setProductData(data));
           resolve(res.data);
         })
         .catch(err => {
@@ -66,17 +59,18 @@ export function register(data) {
 }
 
 /**
- * Reset user password
+ * Fetch all seller products
  *
- * @param data
  * @returns {function(*)}
  */
-export function resetPassword(data) {
+export function fetchAllSellerProducts(filter) {
   return dispatch => {
     dispatch(enableLoading());
     return new Promise((resolve, reject) => {
-      Http.post('auth/reset-password', data)
+      Http.get('seller-products', {params: filter})
         .then(res => {
+          const {list} = res.data;
+          dispatch(setProductList(list));
           resolve(res.data);
         })
         .catch(err => {
@@ -90,17 +84,19 @@ export function resetPassword(data) {
 }
 
 /**
- * Forgot user password
+ * Fetch seller product by id
  *
- * @param data
+ * @param id
  * @returns {function(*)}
  */
-export function forgotPassword(data) {
+export function fetchSellerProductById(id) {
   return dispatch => {
     dispatch(enableLoading());
     return new Promise((resolve, reject) => {
-      Http.post('auth/forgot-password', data)
+      Http.get(`seller-products/${id}`)
         .then(res => {
+          const {data} = res.data;
+          dispatch(setProductData(data));
           resolve(res.data);
         })
         .catch(err => {
@@ -114,19 +110,18 @@ export function forgotPassword(data) {
 }
 
 /**
- * Verify user email
+ * Fetch category owners
  *
- * @param token
  * @returns {function(*)}
  */
-export function verifyEmail(token) {
+export function fetchCategoryOwners() {
   return dispatch => {
     dispatch(enableLoading());
     return new Promise((resolve, reject) => {
-      Http.post(`auth/verify-email/${token}`)
-        .then((res) => {
-          const {token} = res.data;
-          dispatch(authLogin(token));
+      Http.get('seller-products/owners')
+        .then(res => {
+          const {list} = res.data;
+          dispatch(setCategoryOwners(list));
           resolve(res.data);
         })
         .catch(err => {
@@ -140,17 +135,18 @@ export function verifyEmail(token) {
 }
 
 /**
- * Re-send new email verification link
+ * Fetch category products
  *
- * @param params
  * @returns {function(*)}
  */
-export function resendVerifyEmailLink(data) {
+export function fetchCategoryProducts() {
   return dispatch => {
     dispatch(enableLoading());
     return new Promise((resolve, reject) => {
-      Http.post('auth/resend-verify-email-link', data)
-        .then((res) => {
+      Http.get('seller-products/products')
+        .then(res => {
+          const {list} = res.data;
+          dispatch(setCategoryProducts(list));
           resolve(res.data);
         })
         .catch(err => {

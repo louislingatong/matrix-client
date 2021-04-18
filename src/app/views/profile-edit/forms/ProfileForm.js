@@ -1,45 +1,31 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
+import {Link, useLocation} from 'react-router-dom';
 import {useForm} from 'react-hook-form';
 import {Form, Button, Col} from 'react-bootstrap';
-import {FaUserEdit} from 'react-icons/fa'
 import _ from 'lodash';
 import Loader from '../../../components/loader/Loader';
 
 function ProfileForm(props) {
-  const {handleSubmitForm, error, isLoading, profile, successProfileUpdate} = props;
-  const {register, errors, handleSubmit, setError, reset} = useForm();
-  const [mode, setMode] = useState('view');
-
-  useEffect(() => {
-    if (successProfileUpdate && mode === 'update') {
-      setMode('view');
-    }
-  }, [successProfileUpdate])
+  const {handleSubmitForm, error, isLoading, profile} = props;
+  const {register, errors, handleSubmit, setError} = useForm();
 
   useEffect(() => {
     if (!_.isEmpty(error)) {
       setError(error.name, error.value);
     }
-  }, [error])
+  }, [error]);
 
   const onSubmitForm = data => {
-    handleSubmitForm(data)
+    handleSubmitForm(data);
   };
 
   return (
     <div>
-      {
-        mode === 'view' &&
-        <Button variant="default" onClick={() => setMode('update')}
-                style={{position: 'absolute', right: 0, top: 0, zIndex: 1}}>
-          <FaUserEdit size={30} className="text-secondary" />
-        </Button>
-      }
       <Form onSubmit={handleSubmit(onSubmitForm)}>
         <Form.Group controlId="formCode">
           <Form.Label>Code</Form.Label>
           <Form.Control name="code"
-                        defaultValue={profile.user.code}
+                        defaultValue={profile.user && profile.user.code}
                         readOnly/>
         </Form.Group>
         <Form.Row>
@@ -54,10 +40,7 @@ function ProfileForm(props) {
                                 required: 'First Name is required.'
                               })
                             }
-                            defaultValue={profile.firstName}
-                            readOnly={
-                              mode === 'view'
-                            }/>
+                            defaultValue={profile.firstName}/>
               {
                 errors.firstName &&
                 <Form.Text className="text-danger">
@@ -77,10 +60,7 @@ function ProfileForm(props) {
                                 required: 'Last Name is required.'
                               })
                             }
-                            defaultValue={profile.lastName}
-                            readOnly={
-                              mode === 'view'
-                            }/>
+                            defaultValue={profile.lastName}/>
               {
                 errors.lastName &&
                 <Form.Text className="text-danger">
@@ -100,10 +80,7 @@ function ProfileForm(props) {
                             required: 'Username is required.'
                           })
                         }
-                        defaultValue={profile.user.username}
-                        readOnly={
-                          mode === 'view'
-                        }/>
+                        defaultValue={profile.user && profile.user.username}/>
           {
             errors.username &&
             <Form.Text className="text-danger">
@@ -115,20 +92,18 @@ function ProfileForm(props) {
           <Form.Label>Email</Form.Label>
           <Form.Control type="email"
                         name="email"
-                        defaultValue={profile.user.email}
+                        defaultValue={profile.user && profile.user.email}
                         readOnly/>
         </Form.Group>
-        {
-          mode === 'update' &&
-          <div className="text-right">
-            <Button type="submit" className="mr-2"variant="secondary" disabled={isLoading}>
-              {isLoading ? <Loader type="beat" color="light"/> : 'Save' }
-            </Button>
-            <Button type="button" variant="light" onClick={() => setMode('view')} disabled={isLoading}>
-              Cancel
-            </Button>
-          </div>
-        }
+        <div className="text-right">
+          <Button type="submit" className="mr-2" variant="secondary" disabled={isLoading}>
+            {isLoading ? <Loader type="beat" color="light"/> : 'Save' }
+          </Button>
+          <Button type="button" variant="light" disabled={isLoading}
+                  to={{pathname: `/profile/view`, state: {from: location.pathname}}} as={Link}>
+            Cancel
+          </Button>
+        </div>
       </Form>
     </div>
   );

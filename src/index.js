@@ -6,8 +6,10 @@ import Routes from './app/routes';
 import * as serviceWorker from './serviceWorker';
 import './assets/scss/main.scss';
 import {authCheck} from './app/store/authSlice';
+import {setBagItems} from './app/store/bagSlice';
 
 store.dispatch(authCheck());
+store.dispatch(setBagItems());
 
 ReactDOM.render(
   <React.StrictMode>

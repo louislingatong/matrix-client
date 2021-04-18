@@ -8,8 +8,15 @@ class UnprocessableEntityErrorHandler {
     };
 
     if (status === 422) {
-      const {name, message} = error.response.data;
-      data.error = {name, value: {message: message.replace(`"${name}"`, name), shouldFocus: true}};
+      const err = error.response.data.error;
+      const errArr = Object.entries(err);
+      data.error = {
+        name: errArr[0][0],
+        value: {
+          message: errArr[0][1].replace(`"${errArr[0][0]}"`, errArr[0][0]),
+          shouldFocus: true
+        }
+      };
     } else {
       data.error = error.response.data;
     }

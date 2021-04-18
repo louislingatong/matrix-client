@@ -21,7 +21,6 @@ const levelSettings = {
   }
 }
 
-
 function Member({member}) {
   const popover = (data) => (
     <Popover id={`popover-${member.code}`} className="text-center">

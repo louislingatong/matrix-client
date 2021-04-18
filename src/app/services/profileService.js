@@ -3,7 +3,7 @@ import {setMe, setAvatar} from '../store/authSlice';
 import {disableLoading, enableLoading} from '../store/loaderSlice';
 
 /**
- * Retrieve logged in user profile
+ * Retrieve logged in user profile-edit
  *
  * @returns {function(*)}
  */
@@ -29,13 +29,14 @@ export function me() {
 /**
  * Update logged in user
  *
+ * @param data
  * @returns {function(*)}
  */
-export function update(params) {
+export function update(data) {
   return dispatch => {
     dispatch(enableLoading());
     return new Promise((resolve, reject) => {
-      Http.put('profile', params)
+      Http.put('profile', data)
         .then(res => {
           dispatch(setMe(res.data));
           resolve(res.data);
@@ -53,6 +54,7 @@ export function update(params) {
 /**
  * Update logged in user avatar
  *
+ * @param avatar
  * @returns {function(*)}
  */
 export function updateAvatar(avatar) {
@@ -62,10 +64,10 @@ export function updateAvatar(avatar) {
   return dispatch => {
     dispatch(enableLoading());
     return new Promise((resolve, reject) => {
-      Http.put('profile/update-avatar', formData, {headers: {'Content-Type': 'multipart/form-data'}})
+      Http.put('profile-edit/update-avatar', formData, {headers: {'Content-Type': 'multipart/form-data'}})
         .then(res => {
           dispatch(setAvatar(res.data));
-          resolve(res);
+          resolve(res.data);
         })
         .catch(err => {
           reject(err);
