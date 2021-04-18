@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Card, Col, Container, Row, Button, OverlayTrigger, Popover} from 'react-bootstrap';
 import {FaUserCircle} from 'react-icons/fa';
-import {allUsers} from '../../store/userSlice';
+import {userList} from '../../store/userSlice';
 import {loggedInUser} from '../../store/authSlice';
 import {fetchAllUsers} from '../../services/userService';
 import OrganizationalChart from './components/OrganizationalChart';
@@ -10,7 +10,7 @@ import OrganizationalChart from './components/OrganizationalChart';
 function User() {
   const dispatch = useDispatch();
   const profile = useSelector(loggedInUser);
-  const users = useSelector(allUsers);
+  const users = useSelector(userList);
   const [loadUsers, setLoadUsers] = useState(true);
 
   useEffect(() => {
@@ -20,10 +20,10 @@ function User() {
   }, [loadUsers]);
 
   const popover = (
-    <Popover id={`popover-${profile.user.code}`} className="text-center">
-      <Popover.Title as="h3" className="text-nowrap">[{profile.user.code}]&nbsp;{profile.user.name}</Popover.Title>
+    <Popover id={`popover-${profile.user && profile.user.code}`} className="text-center">
+      <Popover.Title as="h3" className="text-nowrap">[{profile.user && profile.user.code}]&nbsp;{profile.user && profile.user.name}</Popover.Title>
       <Popover.Content>
-        <p><strong>Email</strong><br/>{profile.user.email}</p>
+        <p><strong>Email</strong><br/>{profile.user && profile.user.email}</p>
       </Popover.Content>
     </Popover>
   );

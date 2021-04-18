@@ -20,7 +20,13 @@ export const userSlice = createSlice({
 
 export const {setUserList, setUserData} = userSlice.actions;
 
-export const allUsers = state => state.user.list;
-export const selectedUser = state => state.user.data;
+export const resetUser = () => dispatch => {
+  dispatch(setUserList([]));
+  dispatch(setUserData({}));
+};
+
+export const userList = state => state.user.list;
+
+export const userData = state => state.user.data;
 
 export default userSlice.reducer;

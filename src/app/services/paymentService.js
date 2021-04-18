@@ -1,20 +1,21 @@
 import Http from '../utils/Http';
-import {setUserList, setUserData} from '../store/userSlice';
-import {enableLoading, disableLoading} from '../store/loaderSlice';
+import {disableLoading, enableLoading} from '../store/loaderSlice';
+import {setOrderList} from '../store/orderSlice';
+import _ from 'lodash';
 
 /**
- * Fetch all users
+ * Fetch order by order number
  *
  * @returns {function(*)}
  */
-export function fetchAllUsers() {
+export function fetchOrdersByOrderNumber(orderNumber) {
   return dispatch => {
     dispatch(enableLoading());
     return new Promise((resolve, reject) => {
-      Http.get('users')
+      Http.get(`orders/${orderNumber}`)
         .then(res => {
           const {list} = res.data;
-          dispatch(setUserList(list));
+          dispatch(setOrderList(list));
           resolve(res.data);
         })
         .catch(err => {
@@ -28,19 +29,25 @@ export function fetchAllUsers() {
 }
 
 /**
- * Fetch specific user by id
+ * Pay order
  *
- * @param id
+ * @param orderNumber
+ * @param data
  * @returns {function(*)}
  */
-export function fetchUser(id) {
+export function payOrder(orderNumber, data) {
+  const formData = new FormData();
+  _.toPairs(data).forEach(([key, value]) => {
+    formData.append(key, value);
+  });
+
   return dispatch => {
     dispatch(enableLoading());
     return new Promise((resolve, reject) => {
-      Http.get(`users/${id}`)
+      Http.post(`orders/${orderNumber}/pay`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
         .then(res => {
-          const {data} = res.data;
-          dispatch(setUserData(data));
+          const {list} = res.data;
+          dispatch(setOrderList(list));
           resolve(res.data);
         })
         .catch(err => {

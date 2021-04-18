@@ -40,6 +40,7 @@ export const authCheck = () => dispatch => {
 export const authLogout = () => dispatch => {
   localStorage.removeItem('auth_token')
   dispatch(authenticate(false));
+  dispatch(setMe({}));
 };
 
 export const loggedInStatus = state => state.auth.isAuthenticated;

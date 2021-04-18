@@ -3,6 +3,7 @@ import {Link, useLocation} from 'react-router-dom';
 import {Nav, Navbar} from 'react-bootstrap';
 import _ from 'lodash';
 import logo from '../../../assets/images/logo_w.png';
+import BagBadge from '../bag-badge/BagBadge';
 
 function PublicHeader() {
   const location = useLocation();
@@ -23,15 +24,15 @@ function PublicHeader() {
         />
       </Navbar.Brand>
       <Navbar.Collapse id="navbar-nav">
-        <Nav className="mr-auto">
-          <Nav.Link active={location.pathname === '/'}
-                    to={{pathname: '/', state: {from: location.pathname}}}
-                    as={Link}>Home</Nav.Link>
-        </Nav>
+        <nav className="mr-auto"></nav>
+        <BagBadge/>
         <Nav>
           {
             _.isEmpty(_.filter(hideLoginNav, path => _.includes(location.pathname, path))) &&
-            <Nav.Link to={{pathname: '/login', state: {from: location.pathname}}} as={Link}>Login</Nav.Link>
+            <React.Fragment>
+              <Nav.Link to={{pathname: '/login', state: {from: location.pathname}}} as={Link}>Login</Nav.Link>
+              <Nav.Link to={{pathname: '/register', state: {from: location.pathname}}} as={Link}>Register</Nav.Link>
+            </React.Fragment>
           }
         </Nav>
       </Navbar.Collapse>
