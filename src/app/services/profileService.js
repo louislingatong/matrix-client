@@ -64,7 +64,7 @@ export function updateAvatar(avatar) {
   return dispatch => {
     dispatch(enableLoading());
     return new Promise((resolve, reject) => {
-      Http.put('profile-edit/update-avatar', formData, {headers: {'Content-Type': 'multipart/form-data'}})
+      Http.put('profile/update-avatar', formData, {headers: {'Content-Type': 'multipart/form-data'}})
         .then(res => {
           dispatch(setAvatar(res.data));
           resolve(res.data);
