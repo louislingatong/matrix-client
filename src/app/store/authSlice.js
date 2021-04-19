@@ -3,7 +3,7 @@ import HTTP from '../utils/Http';
 
 const initialState = {
   isAuthenticated: false,
-  me: {}
+  me: {user: {}}
 };
 
 export const authSlice = createSlice({
@@ -40,7 +40,7 @@ export const authCheck = () => dispatch => {
 export const authLogout = () => dispatch => {
   localStorage.removeItem('auth_token')
   dispatch(authenticate(false));
-  dispatch(setMe({}));
+  dispatch(setMe({user: {}}));
 };
 
 export const loggedInStatus = state => state.auth.isAuthenticated;

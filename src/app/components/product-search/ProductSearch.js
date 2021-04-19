@@ -6,7 +6,7 @@ import {FaList} from 'react-icons/fa';
 import _ from 'lodash';
 import {fetchAllProducts, fetchAllSellerProducts, fetchCategoryOwners, fetchCategoryProducts} from '../../services/productService';
 import {productCategories, productList} from '../../store/productSlice';
-import {loggedInStatus} from '../../store/authSlice';
+import {loggedInStatus, loggedInUser} from '../../store/authSlice';
 
 function ProductSearch() {
   const location = useLocation();
@@ -14,14 +14,17 @@ function ProductSearch() {
   const products = useSelector(productList);
   const categories = useSelector(productCategories);
   const isAuthenticated = useSelector(loggedInStatus);
+  const profile = useSelector(loggedInUser);
   const [loadCategoryOwners, setLoadCategoryOwners] = useState(true);
   const [loadCategoryProducts, setLoadCategoryProducts] = useState(true);
   const [filter, setFilter] = useState({});
 
   useEffect(() => {
-    if (isAuthenticated) {
-      dispatch(fetchAllProducts())
-    } else {
+    if (isAuthenticated && _.isString(profile.user.role) && profile.user.role !== 'ADMIN') {
+      dispatch(fetchAllProducts());
+    }
+
+    if (!isAuthenticated) {
       dispatch(fetchAllSellerProducts(filter));
     }
   }, [isAuthenticated, filter]);
@@ -82,17 +85,21 @@ function ProductSearch() {
   );
 
   const renderProducts = () => (
-    products.map(({_id, name, memberPrice, product}, i) => (
-      <Col xs={12} sm={12} md={4} key={i}>
-        <Card to={{pathname: `/product/view/${_id}`, state: {from: location.pathname}}} as={Link}
-              className="text-decoration-none">
-          <Card.Body>
-            <Card.Title className="text-truncate">{name || product.name}</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">₱{memberPrice || product.price}</Card.Subtitle>
-          </Card.Body>
-        </Card>
-      </Col>
-    ))
+    <Row>
+      {
+        products.map(({_id, name, memberPrice, product}, i) => (
+          <Col xs={12} sm={12} md={4} key={i}>
+            <Card to={{pathname: `/product/view/${_id}`, state: {from: location.pathname}}} as={Link}
+                  className="text-decoration-none">
+              <Card.Body>
+                <Card.Title className="text-truncate">{name || product.name}</Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">₱{memberPrice || product.price}</Card.Subtitle>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))
+      }
+    </Row>
   );
 
   return (
@@ -103,11 +110,9 @@ function ProductSearch() {
         }
       </Col>
       <Col xs={12} sm={12} md={_.isEmpty(categories) ? 12 : 8}>
-        <Row>
-          {
-            !_.isEmpty(products) && renderProducts()
-          }
-        </Row>
+        {
+          !_.isEmpty(products) && renderProducts()
+        }
       </Col>
     </Row>
   )

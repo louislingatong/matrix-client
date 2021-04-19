@@ -1,26 +1,29 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
+import {useParams, useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import _ from 'lodash';
-import {Badge, Card, Col, Container, Nav, Row, Tab} from 'react-bootstrap';
+import {Col, Container, Row, Nav, Tab, Card, Button, Badge} from 'react-bootstrap';
 import {FaStore} from 'react-icons/fa';
-import {fetchOrdersByOrderNumber} from '../../services/orderService';
+import _ from 'lodash';
 import {orderData} from '../../store/orderSlice';
+import {loggedInStatus} from '../../store/authSlice';
+import {fetchOrdersByOrderNumber} from '../../services/orderService';
 
-function OrderView() {
+function OrderCheck() {
   const params = useParams();
+  const history = useHistory();
   const dispatch = useDispatch();
   const order = useSelector(orderData);
-  const [loadOrder, setLoadOrder] = useState(true);
+  const isAuthenticated = useSelector(loggedInStatus);
+  const [loadOrders, setLoadOrders] = useState(true);
   const [activeTab, setActiveTab] = useState('PENDING');
   const [items, setItems] = useState({});
 
   useEffect(() => {
-    if (loadOrder) {
+    if (loadOrders) {
       dispatch(fetchOrdersByOrderNumber(params.orderNumber))
-        .then(() => setLoadOrder(false));
+        .then(() => setLoadOrders(false));
     }
-  }, [loadOrder]);
+  }, [loadOrders]);
 
   useEffect(() => {
     if (_.chain(order).keys().head().value() === params.orderNumber) {
@@ -45,12 +48,15 @@ function OrderView() {
                     {
                       _.map(groupedItem.items, ({item, quantity}, i) => (
                         <React.Fragment key={i}>
-                          <React.Fragment>
-                            <p>
-                              <FaStore/> {item.owner && item.owner.name}
-                            </p>
-                            <hr/>
-                          </React.Fragment>
+                          {
+                            !isAuthenticated &&
+                              <React.Fragment>
+                                <p>
+                                  <FaStore/> {item.owner && item.owner.name}
+                                </p>
+                                <hr/>
+                              </React.Fragment>
+                          }
                           <Row className="align-items-center">
                             <Col>
                               <h5>
@@ -78,7 +84,30 @@ function OrderView() {
     )
   };
 
+  const payableAmount = () => (
+    <Row className="text-right mb-3">
+      <Col>
+        Total Payable: <span className="h1">₱{_.sumBy(items['PENDING'], (o) => o.totalAmount)}</span>
+      </Col>
+    </Row>
+  );
+
+  const payment = () => (
+    <Row>
+      <Col>
+        <small>Pay with {_.chain(items['PENDING']).groupBy((o) => o.paymentMethod.name).keys().head().value()}</small>
+      </Col>
+      <Col className="text-right">
+        <Button variant="dark" onClick={onPayNow}>Pay Now</Button>
+      </Col>
+    </Row>
+  );
+
   const noOrdersAvailable = () => <p>There are no items available.</p>;
+
+  const onPayNow = () => {
+    history.push(`/payment/${params.orderNumber}`, {from: {path: history.location.pathname}});
+  };
 
   return (
     <Container>
@@ -121,7 +150,13 @@ function OrderView() {
             <Tab.Content>
               <Tab.Pane eventKey="PENDING" transition={false}>
                 {
-                  !_.isEmpty(items) && items['PENDING'] ? orderItems('PENDING') : noOrdersAvailable()
+                  !_.isEmpty(items) && items['PENDING'] ?
+                    <React.Fragment>
+                      {orderItems('PENDING')}
+                      {payableAmount()}
+                      {payment()}
+                    </React.Fragment> :
+                    noOrdersAvailable()
                 }
               </Tab.Pane>
               <Tab.Pane eventKey="PROCESSING" transition={false}>
@@ -140,11 +175,11 @@ function OrderView() {
                 }
               </Tab.Pane>
             </Tab.Content>
-          </Tab.Container>
+        </Tab.Container>
         </Col>
       </Row>
     </Container>
   )
 }
 
-export default OrderView;
+export default OrderCheck;

@@ -16,7 +16,7 @@ function Payment() {
   const onSubmitForm = data => {
     dispatch(payOrder(params.orderNumber, data))
       .then(() => {
-        history.push(`/order/view/${params.orderNumber}`, {from: {path: history.location.pathname}});
+        history.push(`/order/check/${params.orderNumber}`, {from: {path: history.location.pathname}});
       })
       .catch(err => {
         if (err.status === 422) {

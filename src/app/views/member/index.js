@@ -1,29 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import React from 'react';
+import {useSelector} from 'react-redux';
 import {Card, Col, Container, Row, Button, OverlayTrigger, Popover} from 'react-bootstrap';
 import {FaUserCircle} from 'react-icons/fa';
-import {userList} from '../../store/userSlice';
 import {loggedInUser} from '../../store/authSlice';
-import {fetchAllUsers} from '../../services/userService';
-import OrganizationalChart from './components/OrganizationalChart';
+import MembersHierarchy from '../../components/members-hierarchy/MembersHierarchy';
 
 function User() {
-  const dispatch = useDispatch();
   const profile = useSelector(loggedInUser);
-  const users = useSelector(userList);
-  const [loadUsers, setLoadUsers] = useState(true);
-
-  useEffect(() => {
-    if (loadUsers) {
-      dispatch(fetchAllUsers()).then(() => setLoadUsers(false));
-    }
-  }, [loadUsers]);
 
   const popover = (
-    <Popover id={`popover-${profile.user && profile.user.code}`} className="text-center">
-      <Popover.Title as="h3" className="text-nowrap">[{profile.user && profile.user.code}]&nbsp;{profile.user && profile.user.name}</Popover.Title>
+    <Popover id={`popover-${profile.user.code}`} className="text-center">
+      <Popover.Title as="h3" className="text-nowrap">[{profile.user.code}]&nbsp;{profile.user && profile.user.name}</Popover.Title>
       <Popover.Content>
-        <p><strong>Email</strong><br/>{profile.user && profile.user.email}</p>
+        <p><strong>Email</strong><br/>{profile.user.email}</p>
       </Popover.Content>
     </Popover>
   );
@@ -31,7 +20,7 @@ function User() {
   return (
     <Container>
       <Row className="justify-content-center">
-        <h3>User Hierarchy</h3>
+        <h3>Matrix</h3>
       </Row>
       <Row className="justify-content-center">
         <Col className="text-center">
@@ -42,7 +31,7 @@ function User() {
                   <FaUserCircle size={150} className="text-primary"/>
                 </Button>
               </OverlayTrigger>
-              <OrganizationalChart data={users}/>
+              <MembersHierarchy/>
             </Card.Body>
           </Card>
         </Col>

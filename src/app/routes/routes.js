@@ -66,10 +66,10 @@ export default [
     component: lazy(() => import('../views/payment')),
   },
   {
-    name: 'Order View',
-    path: '/order/view/:orderNumber',
+    name: 'Order Check',
+    path: '/order/check/:orderNumber',
     exact: true,
-    component: lazy(() => import('../views/order-view')),
+    component: lazy(() => import('../views/order-check')),
   },
   {
     name: 'Profile View',
@@ -86,11 +86,32 @@ export default [
     component: lazy(() => import('../views/profile-edit')),
   },
   {
-    name: 'Users',
-    path: '/users',
+    name: 'Members',
+    path: '/members',
     exact: true,
     auth: true,
-    component: lazy(() => import('../views/user'))
+    component: lazy(() => import('../views/member'))
+  },
+  {
+    name: 'Orders',
+    path: '/orders',
+    exact: true,
+    auth: true,
+    component: lazy(() => import('../views/order'))
+  },
+  {
+    name: 'Order View',
+    path: '/order/view/:orderNumber',
+    exact: true,
+    auth: true,
+    component: lazy(() => import('../views/order-view'))
+  },
+  {
+    name: 'Order Confirmation',
+    path: '/order/confirm/:orderNumber',
+    exact: true,
+    auth: true,
+    component: lazy(() => import('../views/order-confirm'))
   },
   {
     path: '*',

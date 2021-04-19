@@ -1,7 +1,7 @@
 import {configureStore} from '@reduxjs/toolkit';
 import loaderReducer from './loaderSlice';
 import authReducer from './authSlice';
-import userReducer from './userSlice';
+import memberReducer from './memberSlice';
 import productReducer from './productSlice';
 import bagReducer from './bagSlice';
 import checkoutReducer from './checkoutSlice';
@@ -11,7 +11,7 @@ export default configureStore({
   reducer: {
     loader: loaderReducer,
     auth: authReducer,
-    user: userReducer,
+    member: memberReducer,
     product: productReducer,
     bag: bagReducer,
     checkout: checkoutReducer,

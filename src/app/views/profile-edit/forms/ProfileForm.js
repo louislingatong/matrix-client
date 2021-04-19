@@ -25,7 +25,7 @@ function ProfileForm(props) {
         <Form.Group controlId="formCode">
           <Form.Label>Code</Form.Label>
           <Form.Control name="code"
-                        defaultValue={profile.user && profile.user.code}
+                        defaultValue={profile.user.code}
                         readOnly/>
         </Form.Group>
         <Form.Row>
@@ -80,7 +80,7 @@ function ProfileForm(props) {
                             required: 'Username is required.'
                           })
                         }
-                        defaultValue={profile.user && profile.user.username}/>
+                        defaultValue={profile.user.username}/>
           {
             errors.username &&
             <Form.Text className="text-danger">
@@ -92,7 +92,7 @@ function ProfileForm(props) {
           <Form.Label>Email</Form.Label>
           <Form.Control type="email"
                         name="email"
-                        defaultValue={profile.user && profile.user.email}
+                        defaultValue={profile.user.email}
                         readOnly/>
         </Form.Group>
         <div className="text-right">

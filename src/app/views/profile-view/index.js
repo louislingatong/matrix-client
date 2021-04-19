@@ -54,7 +54,7 @@ function ProfileView() {
                 <Form.Group controlId="formCode">
                   <Form.Label>Code</Form.Label>
                   <Form.Control name="code"
-                                defaultValue={profile.user && profile.user.code}
+                                defaultValue={profile.user.code}
                                 readOnly/>
                 </Form.Group>
                 <Form.Row>
@@ -78,14 +78,14 @@ function ProfileView() {
                 <Form.Group controlId="formUsername">
                   <Form.Label>Username</Form.Label>
                   <Form.Control name="username"
-                                defaultValue={profile.user && profile.user.username}
+                                defaultValue={profile.user.username}
                                 readOnly/>
                 </Form.Group>
                 <Form.Group controlId="formEmail">
                   <Form.Label>Email</Form.Label>
                   <Form.Control type="email"
                                 name="email"
-                                defaultValue={profile.user && profile.user.email}
+                                defaultValue={profile.user.email}
                                 readOnly/>
                 </Form.Group>
               </Form>

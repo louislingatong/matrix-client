@@ -1,7 +1,10 @@
-import React, {useState, useRef} from 'react';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {CardDeck, Card, OverlayTrigger, Popover, Button} from 'react-bootstrap';
 import { FaUserCircle } from 'react-icons/fa'
 import _ from 'lodash';
+import {memberList} from '../../store/memberSlice';
+import {fetchAllMembers} from '../../services/memberService';
 
 const levelSettings = {
   2: {
@@ -55,10 +58,21 @@ function Group({groups}) {
   )
 }
 
-function OrganizationalChart({data}) {
+function MembersHierarchy() {
+  const dispatch = useDispatch();
+  const members = useSelector(memberList);
+  const [loadMembers, setLoadMembers] = useState(true);
+
+  useEffect(() => {
+    if (loadMembers) {
+      dispatch(fetchAllMembers())
+        .then(() => setLoadMembers(false));
+    }
+  }, [loadMembers]);
+
   return (
-    <Group groups={data}/>
+    <Group groups={members}/>
   )
 }
 
-export default OrganizationalChart;
+export default MembersHierarchy;

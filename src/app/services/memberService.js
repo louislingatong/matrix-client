@@ -1,20 +1,20 @@
 import Http from '../utils/Http';
-import {setUserList, setUserData} from '../store/userSlice';
+import {setUserList, setUserData, setMemberList} from '../store/memberSlice';
 import {enableLoading, disableLoading} from '../store/loaderSlice';
 
 /**
- * Fetch all users
+ * Fetch all members
  *
  * @returns {function(*)}
  */
-export function fetchAllUsers() {
+export function fetchAllMembers() {
   return dispatch => {
     dispatch(enableLoading());
     return new Promise((resolve, reject) => {
       Http.get('users')
         .then(res => {
           const {list} = res.data;
-          dispatch(setUserList(list));
+          dispatch(setMemberList(list));
           resolve(res.data);
         })
         .catch(err => {
@@ -28,19 +28,19 @@ export function fetchAllUsers() {
 }
 
 /**
- * Fetch specific user by id
+ * Fetch specific member by id
  *
  * @param id
  * @returns {function(*)}
  */
-export function fetchUser(id) {
+export function fetchMemberById(id) {
   return dispatch => {
     dispatch(enableLoading());
     return new Promise((resolve, reject) => {
       Http.get(`users/${id}`)
         .then(res => {
           const {data} = res.data;
-          dispatch(setUserData(data));
+          dispatch(setMemberData(data));
           resolve(res.data);
         })
         .catch(err => {

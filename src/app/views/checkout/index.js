@@ -151,7 +151,7 @@ function EmailVerificationModal({show, handleClose, handleError}) {
   const {register, errors, handleSubmit, setError} = useForm();
 
   useEffect(() => {
-    if (show && ((profile.user && profile.user.email) !== deliveryAddress.email)) {
+    if (show && (profile.user.email !== deliveryAddress.email)) {
       dispatch(checkEmailStatus(deliveryAddress.email))
         .then(({isVerified}) => {
           if (!isVerified) {
@@ -220,19 +220,19 @@ function EmailVerificationModal({show, handleClose, handleError}) {
       <Modal.Body className="text-center">
         <p>{deliveryAddress.email}</p>
         {
-          ((((profile.user && profile.user.email) === deliveryAddress.email) && (profile.user.status === 'PENDING')) ||
-          (((profile.user && profile.user.email) !== deliveryAddress.email) && !isVerifiedEmail)) ?
+          (((profile.user.email === deliveryAddress.email) && (profile.user.status === 'PENDING')) ||
+          ((profile.user.email !== deliveryAddress.email) && !isVerifiedEmail)) ?
             <small className="text-danger">Not yet verified</small> :
             <small className="text-success">Verified</small>
         }
         {
-          ((profile.user && profile.user.email) === deliveryAddress.email) && (profile.user.status === 'PENDING') &&
+          (profile.user.email === deliveryAddress.email) && (profile.user.status === 'PENDING') &&
             <div>
               Please verify the email associated with your account
             </div>
         }
         {
-          ((profile.user && profile.user.email) !== deliveryAddress.email) && !isVerifiedEmail &&
+          (profile.user.email !== deliveryAddress.email) && !isVerifiedEmail &&
           <div>
             <Form onSubmit={handleSubmit(onVerifyEmail)}>
               <Form.Group>
@@ -270,8 +270,8 @@ function EmailVerificationModal({show, handleClose, handleError}) {
           Close
         </Button>
         <Button variant="dark" onClick={onPay} disabled={
-          ((((profile.user && profile.user.email) === deliveryAddress.email) && (profile.user.status === 'PENDING')) ||
-          (((profile.user && profile.user.email) !== deliveryAddress.email) && !isVerifiedEmail))
+          (((profile.user.email === deliveryAddress.email) && (profile.user.status === 'PENDING')) ||
+          ((profile.user.email !== deliveryAddress.email) && !isVerifiedEmail))
         }>
           Pay
         </Button>

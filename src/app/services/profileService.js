@@ -3,7 +3,7 @@ import {setMe, setAvatar} from '../store/authSlice';
 import {disableLoading, enableLoading} from '../store/loaderSlice';
 
 /**
- * Retrieve logged in user profile-edit
+ * Retrieve logged in member profile-edit
  *
  * @returns {function(*)}
  */
@@ -27,7 +27,7 @@ export function me() {
 }
 
 /**
- * Update logged in user
+ * Update logged in member
  *
  * @param data
  * @returns {function(*)}
@@ -52,7 +52,7 @@ export function update(data) {
 }
 
 /**
- * Update logged in user avatar
+ * Update logged in member avatar
  *
  * @param avatar
  * @returns {function(*)}

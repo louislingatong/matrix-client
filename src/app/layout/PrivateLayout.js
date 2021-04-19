@@ -14,7 +14,7 @@ function PrivateLayout({children}) {
     <React.Fragment>
       <PrivateHeader/>
       {
-        profile.user && profile.user.status === 'PENDING' &&
+        profile.user.status === 'PENDING' &&
         <Alert variant="warning" className="d-flex align-items-center main-notification">
           <FaExclamationTriangle size={20} className="mr-2"/>
           <span>

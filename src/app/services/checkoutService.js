@@ -63,7 +63,7 @@ export function sendEmailVerificationCode(email) {
   return dispatch => {
     dispatch(enableLoading());
     return new Promise((resolve, reject) => {
-      Http.post('orders/send-verify-email-code', {email})
+      Http.post('orders/verify-email', {email})
         .then(res => {
           resolve(res.data);
         })

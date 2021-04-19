@@ -2,12 +2,13 @@ import React from 'react';
 import {Link, useLocation, useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {Nav, Navbar, NavDropdown} from 'react-bootstrap';
+import _ from 'lodash';
 import {authLogout, loggedInUser} from '../../store/authSlice';
 import {resetBag} from '../../store/bagSlice';
 import {resetCheckout} from '../../store/checkoutSlice';
 import {resetOrder} from '../../store/orderSlice';
 import {resetProduct} from '../../store/productSlice';
-import {resetUser} from '../../store/userSlice';
+import {resetUser} from '../../store/memberSlice';
 import BagBadge from '../bag-badge/BagBadge';
 import logo from '../../../assets/images/logo_w.png';
 
@@ -40,13 +41,18 @@ function PrivateHeader() {
       <Navbar.Toggle aria-controls="navbar-nav" />
       <Navbar.Collapse id="navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link active={location.pathname === '/users'}
-                    to={{pathname: '/users', state: {from: location.pathname}}}
-                    as={Link}>Users</Nav.Link>
+          <Nav.Link active={location.pathname === '/members'}
+                    to={{pathname: '/members', state: {from: location.pathname}}}
+                    as={Link}>Members</Nav.Link>
+          <Nav.Link active={location.pathname === '/orders'}
+                    to={{pathname: '/orders', state: {from: location.pathname}}}
+                    as={Link}>Orders</Nav.Link>
         </Nav>
-        <BagBadge/>
+        {
+          _.isString(profile.user.role) && profile.user.role !== 'ADMIN' && <BagBadge/>
+        }
         <Nav>
-          <NavDropdown title={profile.user && profile.user.name} id="basic-nav-dropdown">
+          <NavDropdown title={profile.user.name} id="basic-nav-dropdown">
             <NavDropdown.Item to={{pathname: '/profile/view', state: {from: location.pathname}}}
                               as={Link}>
               Profile

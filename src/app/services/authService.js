@@ -6,10 +6,10 @@ import {resetBag} from '../store/bagSlice';
 import {resetCheckout} from '../store/checkoutSlice';
 import {resetOrder} from '../store/orderSlice';
 import {resetProduct} from '../store/productSlice';
-import {resetUser} from '../store/userSlice';
+import {resetUser} from '../store/memberSlice';
 
 /**
- * Login user
+ * Login member
  *
  * @param data
  * @returns {function(*)}
@@ -17,16 +17,16 @@ import {resetUser} from '../store/userSlice';
 export function login(data) {
   return dispatch => {
     dispatch(enableLoading());
+    dispatch(resetBag());
+    dispatch(resetCheckout());
+    dispatch(resetOrder());
+    dispatch(resetProduct());
+    dispatch(resetUser());
     return new Promise((resolve, reject) => {
       Http.post('auth/login', data)
         .then(res => {
           const {token} = res.data;
           dispatch(authLogin(token));
-          dispatch(resetBag());
-          dispatch(resetCheckout());
-          dispatch(resetOrder());
-          dispatch(resetProduct());
-          dispatch(resetUser());
           resolve(res.data);
         })
         .catch(err => {
@@ -40,7 +40,7 @@ export function login(data) {
 }
 
 /**
- * Register new user
+ * Register new member
  *
  * @param data
  * @returns {function(*)}
@@ -66,7 +66,7 @@ export function register(data) {
 }
 
 /**
- * Reset user password
+ * Reset member password
  *
  * @param data
  * @returns {function(*)}
@@ -90,7 +90,7 @@ export function resetPassword(data) {
 }
 
 /**
- * Forgot user password
+ * Forgot member password
  *
  * @param data
  * @returns {function(*)}
@@ -114,7 +114,7 @@ export function forgotPassword(data) {
 }
 
 /**
- * Verify user email
+ * Verify member email
  *
  * @param token
  * @returns {function(*)}
@@ -124,7 +124,7 @@ export function verifyEmail(token) {
     dispatch(enableLoading());
     return new Promise((resolve, reject) => {
       Http.post(`auth/verify-email/${token}`)
-        .then((res) => {
+        .then(res => {
           const {token} = res.data;
           dispatch(authLogin(token));
           resolve(res.data);
@@ -142,7 +142,7 @@ export function verifyEmail(token) {
 /**
  * Re-send new email verification link
  *
- * @param params
+ * @param data
  * @returns {function(*)}
  */
 export function resendVerifyEmailLink(data) {
