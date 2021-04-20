@@ -3,10 +3,9 @@ import {useForm} from 'react-hook-form';
 import {useSelector} from 'react-redux';
 import {Button, Col, Form, Row} from 'react-bootstrap';
 import _ from 'lodash';
-import Loader from '../../../components/loader/Loader';
 import {loggedInUser} from '../../../store/authSlice';
 
-function DeliveryAddressForm({deliveryAddress, handleSubmitForm, error, isLoading}) {
+function DeliveryAddressForm({deliveryAddress, handleSubmitForm, error}) {
   const profile = useSelector(loggedInUser);
   const {register, errors, handleSubmit, setError, setValue} = useForm();
 
@@ -235,9 +234,7 @@ function DeliveryAddressForm({deliveryAddress, handleSubmitForm, error, isLoadin
       </Form.Row>
       <Row>
         <Col className="text-right">
-          <Button type="submit" variant="dark" disabled={isLoading}>
-            {isLoading ? <Loader type="beat" color="light"/> : 'Save' }
-          </Button>
+          <Button type="submit" variant="dark">Save</Button>
         </Col>
       </Row>
     </Form>

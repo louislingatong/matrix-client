@@ -6,8 +6,8 @@ import {Card, Col, Container, Row, Form, Button, Modal} from 'react-bootstrap';
 import {FaMapPin, FaStore, FaPen} from 'react-icons/fa';
 import _ from 'lodash';
 import DeliveryAddressForm from './forms/DeliveryAddressForm';
-import {loaderStatus} from '../../store/loaderSlice';
 import {bagItemsOG, bagItems} from '../../store/bagSlice';
+import Loader from '../../components/loader/Loader';
 import {
   paymentMethodList,
   setDeliveryAddressData,
@@ -17,6 +17,7 @@ import {
   emailStatus
 } from '../../store/checkoutSlice';
 import {loggedInStatus, loggedInUser} from '../../store/authSlice';
+import {loaderStatus} from '../../store/loaderSlice';
 import {
   fetchAllPaymentMethods,
   checkEmailStatus,
@@ -144,6 +145,7 @@ function EmailVerificationModal({show, handleClose, handleError}) {
   const dispatch = useDispatch();
   const items = useSelector(bagItemsOG);
   const deliveryAddress = useSelector(deliveryAddressData);
+  const isLoading = useSelector(loaderStatus);
   const paymentMethod = useSelector(paymentMethodData);
   const isVerifiedEmail = useSelector(emailStatus);
   const isAuthenticated = useSelector(loggedInStatus);
@@ -259,8 +261,12 @@ function EmailVerificationModal({show, handleClose, handleError}) {
                   </Form.Text>
                 }
               </Form.Group>
-              <Button type="submit" variant="dark" className="btn-block">Verify</Button>
-              <Button variant="light" className="btn-block" onClick={sendEmailVerifyCode}>Resend Verification Code</Button>
+              <Button type="submit" variant="dark" className="btn-block" disabled={isLoading}>
+                {isLoading ? <Loader type="beat" color="light"/> : 'Verify'}
+              </Button>
+              <Button variant="light" className="btn-block" onClick={sendEmailVerifyCode} disabled={isLoading}>
+                {isLoading ? <Loader type="beat" color="light"/> : 'Resend Verification Code'}
+              </Button>
             </Form>
           </div>
         }
@@ -271,9 +277,9 @@ function EmailVerificationModal({show, handleClose, handleError}) {
         </Button>
         <Button variant="dark" onClick={onPay} disabled={
           (((profile.user.email === deliveryAddress.email) && (profile.user.status === 'PENDING')) ||
-          ((profile.user.email !== deliveryAddress.email) && !isVerifiedEmail))
+          ((profile.user.email !== deliveryAddress.email) && !isVerifiedEmail)) || isLoading
         }>
-          Pay
+          {isLoading ? <Loader type="beat" color="light"/> : 'Pay'}
         </Button>
       </Modal.Footer>
     </Modal>
@@ -282,7 +288,6 @@ function EmailVerificationModal({show, handleClose, handleError}) {
 
 function Checkout() {
   const history = useHistory();
-  const isLoading = useSelector(loaderStatus);
   const items = useSelector(bagItems);
   const itemsOG = useSelector(bagItemsOG);
   const deliveryAddress = useSelector(deliveryAddressData);
@@ -335,7 +340,7 @@ function Checkout() {
       </Row>
       <Row>
         <Col xs={12} sm={12} md={9}>
-          <DeliveryAddress error={error} isLoading={isLoading}/>
+          <DeliveryAddress error={error}/>
           <PaymentMethod error={error}/>
           <Button variant="dark" className="btn-block" onClick={onPlaceOrder}
                  disabled={_.isEmpty(deliveryAddress) || _.isEmpty(paymentMethod) || _.isEmpty(itemsOG)}>Place Order</Button>

@@ -4,14 +4,17 @@ import {useDispatch, useSelector} from 'react-redux';
 import _ from 'lodash';
 import {Card, Col, Container, Row, Figure, Button} from 'react-bootstrap';
 import {FaStore} from 'react-icons/fa';
-import {fetchOrdersByOrderNumber, updateOrderStatusByOrderNumber} from '../../services/orderService';
+import Loader from '../../components/loader/Loader';
 import {orderData} from '../../store/orderSlice';
+import {loaderStatus} from "../../store/loaderSlice";
+import {fetchOrdersByOrderNumber, updateOrderStatusByOrderNumber} from '../../services/orderService';
 
 function OrderConfirm() {
   const params = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
   const order = useSelector(orderData);
+  const isLoading = useSelector(loaderStatus);
   const [loadOrder, setLoadOrder] = useState(true);
   const [orderStatus, setOrderStatus] = useState('');
   const [orderItems, setOrderItems] = useState([]);
@@ -136,7 +139,9 @@ function OrderConfirm() {
                   />
                 </Figure>
               }
-              <Button variant="dark" className="btn-block" onClick={onConfirmPayment}>Confirm Payment</Button>
+              <Button variant="dark" className="btn-block" onClick={onConfirmPayment} disabled={isLoading}>
+                {isLoading ? <Loader type="beat" color="light"/> : 'Confirm Payment'}
+              </Button>
             </Card.Body>
           </Card>
         </Col>

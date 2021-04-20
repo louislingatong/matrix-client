@@ -6,6 +6,7 @@ import productReducer from './productSlice';
 import bagReducer from './bagSlice';
 import checkoutReducer from './checkoutSlice';
 import orderReducer from './orderSlice';
+import walletReducer from './walletSlice';
 
 export default configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export default configureStore({
     product: productReducer,
     bag: bagReducer,
     checkout: checkoutReducer,
-    order: orderReducer
+    order: orderReducer,
+    wallet: walletReducer
   },
 });

@@ -53,6 +53,16 @@ function PrivateHeader() {
         }
         <Nav>
           <NavDropdown title={profile.user.name} id="basic-nav-dropdown">
+            {
+              _.isString(profile.user.role) && profile.user.role !== 'ADMIN' &&
+              <React.Fragment>
+                <NavDropdown.Item to={{pathname: '/wallet', state: {from: location.pathname}}}
+                                  as={Link}>
+                  Wallet
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+              </React.Fragment>
+            }
             <NavDropdown.Item to={{pathname: '/profile/view', state: {from: location.pathname}}}
                               as={Link}>
               Profile

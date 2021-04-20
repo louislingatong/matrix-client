@@ -107,6 +107,13 @@ export default [
     component: lazy(() => import('../views/order-view'))
   },
   {
+    name: 'Wallet',
+    path: '/wallet',
+    exact: true,
+    auth: true,
+    component: lazy(() => import('../views/wallet'))
+  },
+  {
     name: 'Order Confirmation',
     path: '/order/confirm/:orderNumber',
     exact: true,

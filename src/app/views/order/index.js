@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useLocation} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {Button, Card, Col, Container, Row, Table} from 'react-bootstrap';
+import {Button, Col, Container, Row, Table} from 'react-bootstrap';
 import {FaFileDownload} from 'react-icons/fa';
 import _ from 'lodash';
+import Loader from '../../components/loader/Loader';
 import {orderList} from '../../store/orderSlice';
 import {loggedInUser} from '../../store/authSlice';
-import {fetchAllOrders} from '../../services/orderService';
+import {loaderStatus} from '../../store/loaderSlice';
+import {fetchAllOrders, updateOrderStatusByOrderNumber} from '../../services/orderService';
 import {downloadReceipt} from '../../services/paymentService';
 
 function Order() {
@@ -14,6 +16,7 @@ function Order() {
   const dispatch = useDispatch();
   const orders = useSelector(orderList);
   const profile = useSelector(loggedInUser);
+  const isLoading = useSelector(loaderStatus);
   const [loadOrders, setLoadOrders] = useState(true);
 
   useEffect(() => {
@@ -27,6 +30,11 @@ function Order() {
     dispatch(downloadReceipt(id));
   };
 
+  const onCompeteOrder = (orderNumber) => {
+    dispatch(updateOrderStatusByOrderNumber(orderNumber, 'COMPLETED'))
+      .then(() => setLoadOrders(true));
+  };
+
   const paymentStatus = (data) => {
     switch (data.status) {
       case 'PROCESSING':
@@ -35,7 +43,10 @@ function Order() {
             For Confirmation
           </Button> : 'For Confirmation';
       case 'CONFIRMED':
-        return 'Confirmed';
+        return profile.user.role === 'ADMIN' ?
+          <Button variant="link" onClick={() => onCompeteOrder(data.orderNumber)} disabled={isLoading}>
+            {isLoading ? <Loader type="beat" color="light"/> : 'Complete Order' }
+          </Button> : 'Completed';
       case 'COMPLETED':
         return 'Completed';
       default:
@@ -43,8 +54,8 @@ function Order() {
     }
   };
 
-  const loadRows = ([key, value]) => (
-    <tr key={key}>
+  const renderRows = ([key, value], i) => (
+    <tr key={i}>
       <td className="text-center">
         <Button variant="link"
                 to={{pathname: `/order/view/${key}`, state: {from: location.pathname}}} as={Link}>
@@ -90,7 +101,7 @@ function Order() {
             </thead>
             <tbody>
             {
-              orders.map(loadRows)
+              orders.map(renderRows)
             }
             </tbody>
           </Table>
