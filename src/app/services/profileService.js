@@ -3,7 +3,7 @@ import {setMe, setAvatar} from '../store/authSlice';
 import {disableLoading, enableLoading} from '../store/loaderSlice';
 
 /**
- * Retrieve logged in member profile-payment-method-product-edit
+ * Retrieve logged in member profile-payment-method-management-product-admin-edit
  *
  * @returns {function(*)}
  */

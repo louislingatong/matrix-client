@@ -28,7 +28,7 @@ export function fetchAllUsers() {
 }
 
 /**
- * Fetch specific user by id
+ * Fetch specific user-management by id
  *
  * @param id
  * @returns {function(*)}

@@ -43,7 +43,7 @@ export default [
   },
   {
     name: 'Product View',
-    path: '/product/view/:id',
+    path: '/product-admin/view/:id',
     exact: true,
     component: lazy(() => import('../views/product/ProductView')),
   },
@@ -67,7 +67,7 @@ export default [
   },
   {
     name: 'Order Check',
-    path: '/order/check/:orderNumber',
+    path: '/order-management/check/:orderNumber',
     exact: true,
     component: lazy(() => import('../views/order-check/OrderCheck')),
   },
@@ -97,63 +97,63 @@ export default [
     path: '/manage/users',
     exact: true,
     auth: true,
-    component: lazy(() => import('../views/management/user'))
+    component: lazy(() => import('../views/admin/user-management'))
   },
   {
     name: 'Products',
     path: '/manage/products',
     exact: true,
     auth: true,
-    component: lazy(() => import('../views/management/product'))
+    component: lazy(() => import('../views/admin/product-management'))
   },
   {
     name: 'Product Add',
     path: '/manage/product/add',
     exact: true,
     auth: true,
-    component: lazy(() => import('../views/management/product/ProductAdd'))
+    component: lazy(() => import('../views/admin/product-management/ProductAdd'))
   },
   {
     name: 'Product View',
     path: '/manage/product/view/:id',
     exact: true,
     auth: true,
-    component: lazy(() => import('../views/management/product/ProductView'))
+    component: lazy(() => import('../views/admin/product-management/ProductView'))
   },
   {
     name: 'Product Edit',
     path: '/manage/product/edit/:id',
     exact: true,
     auth: true,
-    component: lazy(() => import('../views/management/product/ProductEdit'))
+    component: lazy(() => import('../views/admin/product-management/ProductEdit'))
   },
   {
     name: 'Payment Methods',
     path: '/manage/payment-methods',
     exact: true,
     auth: true,
-    component: lazy(() => import('../views/management/payment-method'))
+    component: lazy(() => import('../views/admin/payment-method-management'))
   },
   {
     name: 'Orders',
     path: '/manage/orders',
     exact: true,
     auth: true,
-    component: lazy(() => import('../views/management/order'))
+    component: lazy(() => import('../views/admin/order-management'))
   },
   {
     name: 'Order View',
-    path: '/manage/order/payment-method-product-user-view/:orderNumber',
+    path: '/manage/order/view/:orderNumber',
     exact: true,
     auth: true,
-    component: lazy(() => import('../views/management/order/OrderView'))
+    component: lazy(() => import('../views/admin/order-management/OrderView'))
   },
   {
     name: 'Order Confirmation',
     path: '/manage/order/confirm/:orderNumber',
     exact: true,
     auth: true,
-    component: lazy(() => import('../views/management/order/OrderConfirm'))
+    component: lazy(() => import('../views/admin/order-management/OrderConfirm'))
   },
   {
     name: 'Wallet',

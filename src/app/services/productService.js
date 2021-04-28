@@ -11,7 +11,7 @@ import {
 } from '../store/productSlice';
 
 /**
- * Create new product
+ * Create new product-admin
  *
  * @param data
  * @returns {function(*)}
@@ -62,7 +62,7 @@ export function fetchAllProducts() {
 }
 
 /**
- * Fetch product by id
+ * Fetch product-admin by id
  *
  * @param id
  * @returns {function(*)}
@@ -113,7 +113,7 @@ export function fetchAllSellerProducts(filter) {
 }
 
 /**
- * Fetch seller product by id
+ * Fetch seller product-admin by id
  *
  * @param id
  * @returns {function(*)}
@@ -189,7 +189,7 @@ export function fetchCategoryProducts() {
 }
 
 /**
- * Update product by id
+ * Update product-admin by id
  *
  * @param id
  * @param data
@@ -216,7 +216,7 @@ export function updateProductById(id, data) {
 }
 
 /**
- * Delete product by id
+ * Delete product-admin by id
  *
  * @param id
  * @param index

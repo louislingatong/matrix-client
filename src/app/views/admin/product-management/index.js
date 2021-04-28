@@ -38,7 +38,7 @@ function Product() {
         ...confirmationModalProps,
         open: true,
         message: 'Are you sure?',
-        subMessage: 'Do you really want to delete this product? This process cannot be undone.'
+        subMessage: 'Do you really want to delete this product-admin? This process cannot be undone.'
       });
     }
   };
@@ -66,7 +66,7 @@ function Product() {
                 to={{pathname: `/manage/product/edit/${data._id}`, state: {from: location.pathname}}} as={Link}>
           <FaPen/>
         </Button>
-        <Button variant="danger" onClick={() => onOpenConfirmationModal(data, index)}><FaTrash/></Button>
+        {/*<Button variant="danger" onClick={() => onOpenConfirmationModal(data, index)}><FaTrash/></Button>*/}
       </td>
     </tr>
   );

@@ -132,7 +132,7 @@ function PaymentMethod() {
       <td className="text-center">{data.receiverAddress}</td>
       <td className="text-center">
         <Button variant="warning" className="mr-2" onClick={() => onOpenFormModal('edit', data, index)}><FaPen/></Button>
-        <Button variant="danger" onClick={() => onOpenConfirmationModal('delete', data, index)}><FaTrash/></Button>
+        {/*<Button variant="danger" onClick={() => onOpenConfirmationModal('delete', data, index)}><FaTrash/></Button>*/}
       </td>
     </tr>
   );

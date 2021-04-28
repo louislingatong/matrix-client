@@ -38,7 +38,7 @@ function OrderView() {
       <Row className="mb-3">
         <Col>
           {
-            _.map(items[status], (groupedItem, i) => (
+            _.map(items[status], (groupedItem) => (
               <Card key={groupedItem._id}>
                 <Card.Body>
                   <Col>

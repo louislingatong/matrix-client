@@ -13,7 +13,7 @@ const srcFile = (filename) => {
 
 const config = {
   entry: {
-    main: srcFile('ProductAdd.js'),
+    main: srcFile('index.js'),
     vendor: srcFile('assets/js/main.js')
   },
   plugins: [

@@ -20,7 +20,7 @@ function ProfileEdit() {
   const handleSubmitForm = data => {
     dispatch(update(data))
       .then(() => {
-        history.push('/profile/payment-method-product-user-view', {from: {path: history.location.pathname}});
+        history.push('/profile/payment-method-management-product-admin-user-management-view', {from: {path: history.location.pathname}});
       })
       .catch(err => {
         if (err.status === 422) {

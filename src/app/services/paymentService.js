@@ -5,7 +5,7 @@ import _ from 'lodash';
 import download from 'js-file-download';
 
 /**
- * Pay order
+ * Pay order-management
  *
  * @param orderNumber
  * @param data
