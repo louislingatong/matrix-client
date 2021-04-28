@@ -1,5 +1,5 @@
 import Http from '../utils/Http';
-import {setUserList, setUserData, setMemberList} from '../store/memberSlice';
+import {setMemberList, setMemberData} from '../store/memberSlice';
 import {enableLoading, disableLoading} from '../store/loaderSlice';
 
 /**
@@ -11,7 +11,7 @@ export function fetchAllMembers() {
   return dispatch => {
     dispatch(enableLoading());
     return new Promise((resolve, reject) => {
-      Http.get('users')
+      Http.get('users/members')
         .then(res => {
           const {list} = res.data;
           dispatch(setMemberList(list));

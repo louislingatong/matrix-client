@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import _ from 'lodash';
 
 const initialState = {
   list: [],
@@ -24,11 +25,29 @@ export const productSlice = createSlice({
     },
     setCategories: (state, action) => {
       state.categories = action.payload;
-    }
+    },
+    addProduct: (state, action) => {
+      state.list.push(action.payload);
+    },
+    updateProduct: (state, action) => {
+      state.list = state.list.map(item => item._id === action.payload.data._id ? action.payload.data : item);
+    },
+    removeProduct: (state, action) => {
+      state.list.splice(action.payload, 1)
+    },
   }
 });
 
-export const {setProductList, setProductData, setCategoryOwners, setCategoryProducts, setCategories} = productSlice.actions;
+export const {
+  setProductList,
+  setProductData,
+  setCategoryOwners,
+  setCategoryProducts,
+  setCategories,
+  addProduct,
+  updateProduct,
+  removeProduct
+} = productSlice.actions;
 
 export const resetProduct = () => dispatch => {
   dispatch(setProductList([]));

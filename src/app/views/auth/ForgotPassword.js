@@ -3,7 +3,7 @@ import {Link, useLocation} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {Alert, Card, Col, Container, Image, Row} from 'react-bootstrap';
 import _ from 'lodash';
-import logo from '../../../assets/images/logo_b.png';
+import logo from '../../../assets/images/rt_logo_detailed.png';
 import ForgotPasswordForm from './forms/ForgotPasswordForm';
 import {forgotPassword} from '../../services/authService';
 import {loaderStatus} from '../../store/loaderSlice';
@@ -41,7 +41,7 @@ function ForgotPassword() {
     <Container>
       <Row className="justify-content-center">
         <Link to={{pathname: '/', state: {from: location.pathname}}}>
-          <Image src={logo} fluid/>
+          <Image src={logo} width={297} height={260}/>
         </Link>
       </Row>
       <Row className="justify-content-center">

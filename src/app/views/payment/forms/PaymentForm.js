@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Button, Col, Form, Row} from 'react-bootstrap';
 import {useForm} from 'react-hook-form';
 import _ from "lodash";
-import Loader from '../../../components/loader/Loader';
+import Loader from '../../../components/common/loader/Loader';
 import ImageUpload from '../../../components/image-upload/ImageUpload';
 
 function PaymentForm({handleSubmitForm, error, isLoading}) {
@@ -77,7 +77,8 @@ function PaymentForm({handleSubmitForm, error, isLoading}) {
                             register({
                               required: 'Official receipt is required.'
                             })
-                          } style={{display: 'none'}}/>
+                          }
+                          style={{display: 'none'}}/>
             {
               errors.receipt &&
               <Form.Text className="text-danger">

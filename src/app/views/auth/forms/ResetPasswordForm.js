@@ -3,7 +3,7 @@ import {useForm} from 'react-hook-form';
 import {useParams} from 'react-router-dom';
 import {Form, Button} from 'react-bootstrap';
 import _ from 'lodash';
-import Loader from '../../../components/loader/Loader';
+import Loader from '../../../components/common/loader/Loader';
 
 function ResetPasswordForm({handleSubmitForm, error, isLoading}) {
   const params = useParams();

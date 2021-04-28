@@ -3,7 +3,7 @@ import {useForm} from 'react-hook-form';
 import {useSelector} from 'react-redux';
 import {Form, Button} from 'react-bootstrap';
 import _ from 'lodash';
-import Loader from '../../../components/loader/Loader';
+import Loader from '../../../components/common/loader/Loader';
 import {loggedInUser} from '../../../store/authSlice';
 
 function ResendVerifyEmailLinkForm({handleSubmitForm, error, isLoading}) {

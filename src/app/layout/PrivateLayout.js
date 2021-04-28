@@ -3,8 +3,8 @@ import {useSelector} from 'react-redux';
 import {Link, useLocation} from 'react-router-dom';
 import {Alert} from 'react-bootstrap';
 import {FaExclamationTriangle} from 'react-icons/fa';
-import PrivateHeader from '../components/header/PrivateHeader';
-import Footer from '../components/footer/Footer';
+import PrivateHeader from '../components/common/header/PrivateHeader';
+import Footer from '../components/common/footer/Footer';
 import {loggedInUser} from '../store/authSlice';
 
 function PrivateLayout({children}) {

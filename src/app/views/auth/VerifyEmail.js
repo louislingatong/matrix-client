@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useHistory, useParams, Link} from 'react-router-dom';
 import {Alert, Card, Col, Container, Image, Row} from 'react-bootstrap';
 import _ from 'lodash';
-import logo from '../../../assets/images/logo_b.png';
+import logo from '../../../assets/images/rt_logo_detailed.png';
 import ResendVerifyEmailLinkForm from './forms/ResendVerifyEmailLinkForm';
 import {verifyEmail, resendVerifyEmailLink} from '../../services/authService';
 import {loaderStatus} from '../../store/loaderSlice';
@@ -51,7 +51,7 @@ function VerifyEmail() {
     <Container>
       <Row className="justify-content-center">
         <Link to={{pathname: '/', state: {from: history.location.pathname}}}>
-          <Image src={logo} fluid/>
+          <Image src={logo} width={297} height={260}/>
         </Link>
       </Row>
       <Row className="justify-content-center">

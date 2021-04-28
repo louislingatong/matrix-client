@@ -1,8 +1,8 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom';
 import _ from 'lodash';
-import PublicHeader from '../components/header/PublicHeader';
-import Footer from '../components/footer/Footer';
+import PublicHeader from '../components/common/header/PublicHeader';
+import Footer from '../components/common/footer/Footer';
 
 function PublicLayout({children}) {
   const location = useLocation();

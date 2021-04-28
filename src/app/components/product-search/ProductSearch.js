@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useLocation} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {Row, Col, Card, ListGroup} from 'react-bootstrap';
+import {Row, Col, Card, ListGroup, Jumbotron, Container} from 'react-bootstrap';
 import {FaList} from 'react-icons/fa';
 import _ from 'lodash';
 import {fetchAllProducts, fetchAllSellerProducts, fetchCategoryOwners, fetchCategoryProducts} from '../../services/productService';
@@ -66,15 +66,15 @@ function ProductSearch() {
         Category
       </Card.Header>
       {
-        Object.entries(categories).map(([key, value], i) => (
-          <ListGroup key={i} defaultActiveKey={`all-${key}`} variant="flush">
+        Object.entries(categories).map(([key, value]) => (
+          <ListGroup key={key} defaultActiveKey={`all-${key}`} variant="flush">
             <ListGroup.Item action eventKey={`all-${key}`} variant="light"
                             onClick={() => onCategoryChange(key)}>
               All {key.charAt(0).toUpperCase() + key.slice(1)}
             </ListGroup.Item>
             {
-              value.map((item, i) => (
-                <ListGroup.Item key={i} action eventKey={item.name} variant="light"
+              value.map((item) => (
+                <ListGroup.Item key={item._id} action eventKey={item.name} variant="light"
                                 onClick={()=> onCategoryChange(key, item._id)}>{item.name}</ListGroup.Item>
               ))
             }
@@ -88,7 +88,7 @@ function ProductSearch() {
     <Row>
       {
         products.map(({_id, name, memberPrice, product}, i) => (
-          <Col xs={12} sm={12} md={4} key={i}>
+          <Col key={_id} xs={12} sm={12} md={4}>
             <Card to={{pathname: `/product/view/${_id}`, state: {from: location.pathname}}} as={Link}
                   className="text-decoration-none">
               <Card.Body>
@@ -110,9 +110,13 @@ function ProductSearch() {
         }
       </Col>
       <Col xs={12} sm={12} md={_.isEmpty(categories) ? 12 : 8}>
-        {
-          !_.isEmpty(products) && renderProducts()
-        }
+        <Card>
+          <Card.Body>
+            {
+              _.isEmpty(products) ? <Card.Text>There are no products available.</Card.Text> : renderProducts()
+            }
+          </Card.Body>
+        </Card>
       </Col>
     </Row>
   )
