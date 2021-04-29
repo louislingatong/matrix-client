@@ -43,7 +43,7 @@ export default [
   },
   {
     name: 'Product View',
-    path: '/product-admin/view/:id',
+    path: '/product/view/:id',
     exact: true,
     component: lazy(() => import('../views/product/ProductView')),
   },
