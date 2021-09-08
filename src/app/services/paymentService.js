@@ -20,7 +20,7 @@ export function payOrder(orderNumber, data) {
   return dispatch => {
     dispatch(enableLoading());
     return new Promise((resolve, reject) => {
-      Http.post(`orders/${orderNumber}/pay`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+      Http.post(`orders/${orderNumber}`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
         .then(res => {
           const {list} = res.data;
           dispatch(setOrderList(list));
