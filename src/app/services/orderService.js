@@ -13,7 +13,7 @@ export function createOrder(data) {
   return dispatch => {
     dispatch(enableLoading());
     return new Promise((resolve, reject) => {
-      Http.post('orders/place-order-management', data)
+      Http.post('orders/place-order', data)
         .then(res => {
           const {orderList} = res.data;
           dispatch(resetBag());
@@ -40,7 +40,7 @@ export function createOrderGuest(data) {
   return dispatch => {
     dispatch(enableLoading());
     return new Promise((resolve, reject) => {
-      Http.post('orders/place-order-management/guest', data)
+      Http.post('orders/place-order/guest', data)
         .then(res => {
           const {orderList} = res.data;
           dispatch(resetBag());
