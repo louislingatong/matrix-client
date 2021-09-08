@@ -30,7 +30,7 @@ function ProductView() {
               </Form.Group>
               <Form.Group controlId="formDescription">
                 <Form.Label>Description</Form.Label>
-                <div className="form-control" dangerouslySetInnerHTML={{__html: product.description}} />
+                <div className="form-control h-auto" dangerouslySetInnerHTML={{__html: product.description}} />
               </Form.Group>
               <Form.Group controlId="formPrice">
                 <Form.Label>Price</Form.Label>
