@@ -76,10 +76,8 @@ function EmailVerificationModal({show, handleClose, handleError}) {
           }
         });
     } else {
-      console.log("payment", formData);
       dispatch(createOrderGuest(formData))
         .then(({orderNumber}) => {
-          console.log(orderNumber);
           redirectToPayment(orderNumber);
         })
         .catch(err => {
